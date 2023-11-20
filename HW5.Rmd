@@ -1,0 +1,23 @@
+---
+title: "Homework 5"
+author: "Elizabeth Fritz"
+date: "November 29, 2023"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# packages needed
+library("readr")
+library("dplyr")
+```
+
+
+```{r}
+# reading in homicides data
+homicides <- read_csv("data/homicide-data.csv")
+```
+
