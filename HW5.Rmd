@@ -13,11 +13,23 @@ knitr::opts_chunk$set(echo = TRUE)
 # packages needed
 library("readr")
 library("dplyr")
+library("lubridate")
 ```
 
 
 ```{r}
 # reading in homicides data
 homicides <- read_csv("data/homicide-data.csv")
+
+# creating city_state and date variables
+baltimore_homicides <- homicides %>%
+  mutate(city_state = paste(city, state, sep = ", ")) %>%
+  filter(city_state == "Baltimore, MD") %>%
+  mutate(reported_date = ymd(reported_date),
+         reported_month = month(reported_date),
+         season = case_when(reported_month %in% c(1:4, 11:12) ~ "Winter",
+                            reported_month %in% c(5:10) ~ "Summer"))
 ```
+
+
 
