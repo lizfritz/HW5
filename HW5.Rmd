@@ -15,6 +15,7 @@ library("readr")
 library("dplyr")
 library("lubridate")
 library("ggplot2")
+library("scales")
 ```
 
 
@@ -37,13 +38,15 @@ baltimore_homicides <- homicides %>%
 ```
 
 ```{r}
-baltimore_homicides %>%
+baltimore_homicides <- baltimore_homicides %>%
   group_by(reported_month_year) %>%
   mutate(monthly_count = n()) 
 
+
 baltimore_homicides %>%
-  ggplot() +
-  geom_bar(aes(x = ))
+ggplot(aes(x = monthly_count, y = reported_year, fill = season)) +
+  geom_col() +
+  coord_flip()
 ```
 
 
