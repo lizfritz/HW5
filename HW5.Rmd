@@ -16,6 +16,7 @@ library("dplyr")
 library("lubridate")
 library("ggplot2")
 library("scales")
+library("ggthemes")
 ```
 
 
@@ -38,15 +39,20 @@ baltimore_homicides <- homicides %>%
 ```
 
 ```{r}
-baltimore_homicides <- baltimore_homicides %>%
-  group_by(reported_month_year) %>%
-  mutate(monthly_count = n()) 
+
+# group by month year to count monthly count of cases
+# plot monthly count by reported_date???
 
 
-baltimore_homicides %>%
-ggplot(aes(x = monthly_count, y = reported_year, fill = season)) +
-  geom_col() +
-  coord_flip()
+test <- baltimore_homicides %>%
+  group_by(reported_month, reported_year) %>%
+  mutate(monthly_count =(n())) %>%
+  ggplot() + 
+  geom_bar(aes(x = reported_date, fill = season)) +
+  theme_few() +
+  theme_dark()
+
+test
 ```
 
 
