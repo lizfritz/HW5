@@ -6,10 +6,10 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, include = TRUE, warning = FALSE, message = FALSE, error = FALSE)
 ```
 
-```{r}
+```{r, warning = FALSE}
 # packages needed
 library("readr")
 library("dplyr")
@@ -17,7 +17,6 @@ library("lubridate")
 library("ggplot2")
 library("scales")
 library("ggthemes")
-library("stringr")
 ```
 
 
@@ -36,7 +35,7 @@ baltimore_homicides <- homicides %>%
          month_year = my(reported_month_year))
 ```
 
-```{r}
+```{r, fig.height = 3, fig.width = 6}
 # grouping by month_year to count monthly_homicides
 # creating season variable
 baltimore_monthly <- baltimore_homicides %>% 
@@ -71,7 +70,6 @@ plot <- baltimore_monthly %>%
   labs(x = "Date", y = "Monthly homicides") +
   theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
-
 
 plot
 ```
