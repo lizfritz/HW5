@@ -61,6 +61,9 @@ plot <- baltimore_monthly %>%
   geom_vline(xintercept = freddie_gray$month_year, 
              color = "red", size = 1, linetype = 2) +
   geom_smooth(span = 0.15, se = FALSE, aes(x = month_year, y = monthly_homicides)) +
+  geom_text(aes(x = freddie_gray$month_year, 
+                y = freddie_gray$monthly_homicides), 
+            label = "Arrest of Freddie Gray") +
   theme_dark() + 
   scale_fill_manual(values = c("lightgray", "lightblue")) +
   ggtitle("Homicides in Baltimore, MD") +
