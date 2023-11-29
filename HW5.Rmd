@@ -49,11 +49,17 @@ baltimore_monthly <- baltimore_homicides %>%
                             reported_month %in% 
                               c(5:10) ~ "Summer"))
 
+# creating dataframe of Freddie Gray's arrest
+freddie_gray <- baltimore_monthly %>% 
+  filter(month_year == "2015-04-01")
+
 # creating a histogram of monthly homicides 
 plot <- baltimore_monthly %>% 
   arrange(month_year) %>% 
   ggplot() + 
   geom_col(aes(x = month_year, y = monthly_homicides, fill = season)) +
+  geom_vline(xintercept = freddie_gray$month_year, 
+             color = "red", size = 1, linetype = 2) +
   geom_smooth(span = 0.15, se = FALSE, aes(x = month_year, y = monthly_homicides)) +
   theme_dark() + 
   scale_fill_manual(values = c("lightgray", "lightblue")) +
