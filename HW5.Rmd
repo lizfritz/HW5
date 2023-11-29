@@ -54,7 +54,7 @@ plot <- baltimore_monthly %>%
   arrange(month_year) %>% 
   ggplot() + 
   geom_col(aes(x = month_year, y = monthly_homicides, fill = season)) +
-  geom_smooth(aes(x = month_year, y = monthly_homicides)) +
+  geom_smooth(span = 0.15, se = FALSE, aes(x = month_year, y = monthly_homicides)) +
   theme_dark() + 
   scale_fill_manual(values = c("lightgray", "lightblue")) +
   ggtitle("Homicides in Baltimore, MD") +
