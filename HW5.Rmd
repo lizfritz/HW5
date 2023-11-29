@@ -32,29 +32,36 @@ baltimore_homicides <- homicides %>%
   mutate(reported_date = ymd(reported_date),
          reported_month = month(reported_date),
          reported_year = year(reported_date),
-         reported_month_year = paste(reported_month, reported_year, sep = "-"), 
-         season = case_when(reported_month %in% c(1:4, 11:12) ~ "Winter",
-                            reported_month %in% c(5:10) ~ "Summer")) %>% 
-  group_by(reported_month_year) %>% 
-  mutate(monthly_homicides = n()) %>% 
-  ungroup()
+         reported_month_year = (paste(reported_month, reported_year, sep = "-")),
+         month_year = my(reported_month_year))
 ```
 
 ```{r}
+# grouping by month_year to count monthly_homicides
+# creating season variable
+baltimore_monthly <- baltimore_homicides %>% 
+  group_by(month_year) %>% 
+  summarize(monthly_homicides = n()) %>% 
+  ungroup() %>% 
+  mutate(reported_month = month(month_year),
+         season = case_when(reported_month %in%
+                              c(1:4, 11:12) ~ "Winter",
+                            reported_month %in% 
+                              c(5:10) ~ "Summer"))
 
-
-baltimore_homicides %>% 
+# creating a histogram of monthly homicides 
+plot <- baltimore_monthly %>% 
+  arrange(month_year) %>% 
   ggplot() + 
-  geom_col(aes(x = reported_date, y = monthly_homicides, fill = season)) +
-  theme_dark() +
+  geom_col(aes(x = month_year, y = monthly_homicides, fill = season)) +
+  geom_smooth(aes(x = month_year, y = monthly_homicides)) +
+  theme_dark() + 
   scale_fill_manual(values = c("lightgray", "lightblue")) +
   ggtitle("Homicides in Baltimore, MD") +
   labs(x = "Date", y = "Monthly homicides") +
   theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
-  
 
-range(baltimore_homicides$monthly_homicides)
-
+plot
 ```
 
